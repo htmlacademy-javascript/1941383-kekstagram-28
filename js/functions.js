@@ -53,31 +53,32 @@ getNumber(1.5);
 //функция с тремя параметрами
 function getFileAddres (string, minLength, finishing) {
   let newString = String(string);
-  let finishingString = String(finishing);
-
-  if(newString.length > minLength){
+  const finishingString = String(finishing);
+  if(newString.length >= minLength){
     return newString;
   }
   if(newString.length < minLength){
     while(newString.length < minLength){
-      let differenceLength = (newString.length + finishingString.length);
-      if(differenceLength > minLength){ //5+5 > 6  ; finishingString.slice(5+5-6) + newString
-        newString = finishingString.slice(-differenceLength) + newString;
+      const differenceLength = Number(newString.length + finishingString.length);
+      if(differenceLength > minLength){
+        const minus = differenceLength - minLength;
+        newString = finishingString.slice(0, -minus) + newString;
         return newString;
       }
       newString = finishingString + newString;
     }
     return newString;
   }
-  return newString;
 }
+
+//рабочая функция через padStart
 /*function getFileAddres (string, targetLength, padString) {
   const newString = string.padStart(targetLength, padString);
   return newString;
 }*/
 
-getFileAddres('1', 2, '0');
-getFileAddres('1', 4, '0');
-getFileAddres('q', 4, 'werty');
-getFileAddres('q', 4, 'we');
-getFileAddres('qwerty', 4, '0');
+getFileAddres('1', 2, '0'); // Результат: строка '01'
+getFileAddres('1', 4, '0'); // Результат: строка '0001'
+getFileAddres('q', 4, 'werty'); // Результат: строка 'werq'
+getFileAddres('q', 4, 'we'); // Результат: строка 'wweq'
+getFileAddres('qwerty', 4, '0'); // Результат: строка 'qwerty'
