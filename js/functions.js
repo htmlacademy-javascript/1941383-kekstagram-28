@@ -58,21 +58,24 @@ function getFileAddres (string, minLength, finishing) {
   if(newString.length > minLength){
     return newString;
   }
-
-  //если длина с добивкой больше
-  //выясняем длину с добивкой
-  //вычитаем из общей длины минимальную длину
-  //полученное число обрезаем с конца добивки с помощью slice
-  //складываем с начальной строкой (или добавляем посимвольно)
-
   if(newString.length < minLength){
     while(newString.length < minLength){
+      let differenceLength = (newString.length + finishingString.length);
+      if(differenceLength > minLength){ //5+5 > 6  ; finishingString.slice(5+5-6) + newString
+        newString = finishingString.slice(-differenceLength) + newString;
+        return newString;
+      }
       newString = finishingString + newString;
     }
     return newString;
   }
   return newString;
 }
+/*function getFileAddres (string, targetLength, padString) {
+  const newString = string.padStart(targetLength, padString);
+  return newString;
+}*/
+
 getFileAddres('1', 2, '0');
 getFileAddres('1', 4, '0');
 getFileAddres('q', 4, 'werty');
