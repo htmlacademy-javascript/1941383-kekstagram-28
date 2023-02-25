@@ -110,4 +110,6 @@ const createDescription = () => (
 
 const createObjects = Array.from({length: createDescriptionCount}, createDescription);
 
-console.log(createObjects);
+const createObjectsFunction = () => createObjects;
+
+createObjectsFunction();
