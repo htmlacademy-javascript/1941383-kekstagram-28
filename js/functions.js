@@ -1,19 +1,19 @@
 //функиция, которая проверяет длину строки
 
-function getStringLength (word, length) {
+function isStringShort (word, length) {
   if(word.length - 1 < length){
     return true;
   }
   return false;
 }
 
-getStringLength('проверяемая строка', 20);
-getStringLength('проверяемая строка', 18);
-getStringLength('проверяемая строка', 10);
+isStringShort('проверяемая строка', 20);
+isStringShort('проверяемая строка', 18);
+isStringShort('проверяемая строка', 10);
 
 //Функция для проверки, является ли строка палиндромом.
 
-function getPalindrom (string) {
+function isPalindrom (string) {
   let upperString = string.toUpperCase();
   upperString = upperString.replaceAll(' ', '');
   for (let i = 0; i <= upperString.length - 1; i++) {
@@ -24,11 +24,11 @@ function getPalindrom (string) {
   return true;
 }
 
-getPalindrom('топот'); // Результат: true - строка является палиндромом
-getPalindrom('ДовОд'); // Результат: true - несмотря на разный регистр, тоже палиндром
-getPalindrom('Кекс'); // Результат: false - это не палиндром
+isPalindrom('топот'); // Результат: true - строка является палиндромом
+isPalindrom('ДовОд'); // Результат: true - несмотря на разный регистр, тоже палиндром
+isPalindrom('Кекс'); // Результат: false - это не палиндром
 
-getPalindrom('Лёша на полке клопа нашёл ');
+isPalindrom('Лёша на полке клопа нашёл ');
 
 //функция принимающая строку и извлекающая из неё целые числа
 function getNumber (string) {
@@ -56,12 +56,12 @@ function getFileAddres (string, minLength, finishing) {
   const finishingString = String(finishing);
   if(newString.length >= minLength){
     return newString;
-  }
+  } else
   if(newString.length < minLength){
     while(newString.length < minLength){
-      const differenceLength = Number(newString.length + finishingString.length);
-      if(differenceLength > minLength){
-        const minus = differenceLength - minLength;
+      const summLength = Number(newString.length + finishingString.length);
+      if(summLength > minLength){
+        const minus = summLength - minLength;
         newString = finishingString.slice(0, -minus) + newString;
         return newString;
       }
