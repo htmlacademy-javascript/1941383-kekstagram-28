@@ -46,7 +46,7 @@ const USER_NAME = [
   'Виктория'
 ];
 
-const createDescriptionCount = 25;
+const CREATE_DESCRIPTION_COUNT = 25;
 
 
 const getRandomInteger = (min, max) => {
@@ -87,7 +87,7 @@ const generateCommentId = createIdGenerator();
 const createComments = () => (
   {
     id: generateCommentId(),
-    avatar: `img/ ${getRandomInteger(1, 6)} .svg`,
+    avatar: `img/${getRandomInteger(1, 6)}.svg`,
     message: MESSAGE_TEXT_PARAGRAPH[getRandomInteger(0, MESSAGE_TEXT_PARAGRAPH.length - 1)],
     name: USER_NAME[getRandomInteger(0, USER_NAME.length - 1)]
   }
@@ -101,14 +101,14 @@ const generatePhotoLikes = createIdGeneratorRandom(1, 25);
 const createDescription = () => (
   {
     id: generatePhotoId(),
-    url: `photos/${ generatePhotoAddres() }.jpg`,
+    url: `photos/${generatePhotoAddres()}.jpg`,
     description: PHOTOS_DESCRIPTION[generatePhotoDescription()],
     likes: generatePhotoLikes(),
     comments: Array.from({length: getRandomInteger(1, 25)}, createComments),
   }
 );
 
-const createObjects = Array.from({length: createDescriptionCount}, createDescription);
+const createObjects = Array.from({length: CREATE_DESCRIPTION_COUNT}, createDescription);
 
 const createObjectsFunction = () => createObjects;
 
