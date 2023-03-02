@@ -83,10 +83,6 @@ const createDescription = () => (
   }
 );
 
-const createObjects = Array.from({length: CREATE_DESCRIPTION_COUNT}, createDescription);
+const createPictures = () => Array.from({length: CREATE_DESCRIPTION_COUNT}, createDescription);
 
-const createObjectsFunction = () => createObjects;
-
-createObjectsFunction();
-
-export {createObjectsFunction};
+export {createPictures};

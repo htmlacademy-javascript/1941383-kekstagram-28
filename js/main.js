@@ -1,3 +1,3 @@
-import {createObjectsFunction} from './data.js';
+import {createPictures} from './data.js';
 
-createObjectsFunction();
+createPictures();
