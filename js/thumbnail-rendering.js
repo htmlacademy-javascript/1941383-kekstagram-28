@@ -6,11 +6,11 @@ const picture = document.querySelector('#picture')
 
 const pictures = document.querySelector('.pictures'); //сюда вставляем
 
-const simularPictures = createPictures();
+const similarPictures = createPictures();
 
 const similarListFragment = document.createDocumentFragment();
 
-simularPictures.forEach(({url, likes, comments}) => {
+similarPictures.forEach(({url, likes, comments}) => {
   const pictureElement = picture.cloneNode(true);
 
   pictureElement.querySelector('.picture__img').src = url;
@@ -21,4 +21,6 @@ simularPictures.forEach(({url, likes, comments}) => {
 });
 
 pictures.appendChild(similarListFragment);
+
+export{pictures};
 
