@@ -11,22 +11,26 @@ const body = document.querySelector('body');
 
 const renderComments = (item) => {
   //socialComments.innerHTML = ''; //очищает разметку, но тогда не склонировать элемент
+  const similarCommentFragment = document.createDocumentFragment();
+  const socialComment = document.querySelector('.social__comment').cloneNode(true);
+  socialComments.innerHTML = '';
+
   item.forEach(({avatar, name, message}) => {
-    const socialComment = document.querySelector('.social__comment').cloneNode(true);
+    const socialCommentCopy = socialComment.cloneNode(true);
 
-    socialComment.querySelector('.social__picture').src = avatar;
-    socialComment.querySelector('.social__picture').alt = name;
-    socialComment.querySelector('.social__text').textContent = message;
+    socialCommentCopy.querySelector('.social__picture').src = avatar;
+    socialCommentCopy.querySelector('.social__picture').alt = name;
+    socialCommentCopy.querySelector('.social__text').textContent = message;
 
-    socialComments.append(socialComment);
+    similarCommentFragment.append(socialCommentCopy);
   });
+  socialComments.append(similarCommentFragment);
 };
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
   }
 };
 
