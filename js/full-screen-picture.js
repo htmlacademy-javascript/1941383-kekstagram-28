@@ -1,5 +1,5 @@
 import {pictures} from './thumbnail-rendering.js';
-import {similarPictures} from './thumbnail-rendering.js';
+import {similarPictures} from './main.js';
 import {isEscapeKey} from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
@@ -9,13 +9,12 @@ const socialCommentsCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const body = document.querySelector('body');
 
-const renderComments = (item) => {
-  //socialComments.innerHTML = ''; //очищает разметку, но тогда не склонировать элемент
+const renderComments = (comments) => {
   const similarCommentFragment = document.createDocumentFragment();
   const socialComment = document.querySelector('.social__comment').cloneNode(true);
   socialComments.innerHTML = '';
 
-  item.forEach(({avatar, name, message}) => {
+  comments.forEach(({avatar, name, message}) => {
     const socialCommentCopy = socialComment.cloneNode(true);
 
     socialCommentCopy.querySelector('.social__picture').src = avatar;

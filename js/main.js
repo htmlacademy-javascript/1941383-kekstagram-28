@@ -1,5 +1,8 @@
 import {createPictures} from './data.js';
-import './thumbnail-rendering.js';
+import {renderThumbnails} from './thumbnail-rendering.js';
 import './full-screen-picture.js';
 
-createPictures();
+const similarPictures = createPictures();
+renderThumbnails(similarPictures);
+
+export{similarPictures};

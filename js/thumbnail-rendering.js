@@ -1,28 +1,31 @@
-import {createPictures} from './data.js';
-
-const picture = document.querySelector('#picture')
-  .content
-  .querySelector('.picture'); //шаблон который копируем
+//import {createPictures} from './data.js';
 
 const pictures = document.querySelector('.pictures'); //сюда вставляем
 
-const similarPictures = createPictures();
+const renderThumbnails = (picturesArray) => {
+  const picture = document.querySelector('#picture')
+    .content
+    .querySelector('.picture'); //шаблон который копируем
 
-const similarListFragment = document.createDocumentFragment();
+  const similarListFragment = document.createDocumentFragment();
 
-similarPictures.forEach(({url, likes, comments, id}) => {
-  const pictureElement = picture.cloneNode(true);
+  picturesArray.forEach(({url, likes, comments, id}) => {
+    const pictureElement = picture.cloneNode(true);
 
-  pictureElement.querySelector('.picture__img').src = url;
-  pictureElement.querySelector('.picture__likes').textContent = likes;
-  pictureElement.querySelector('.picture__comments').textContent = comments.length;
-  pictureElement.querySelector('.picture__img').setAttribute('data-id', id);
-  similarListFragment.appendChild(pictureElement);
-});
+    pictureElement.querySelector('.picture__img').src = url;
+    pictureElement.querySelector('.picture__likes').textContent = likes;
+    pictureElement.querySelector('.picture__comments').textContent = comments.length;
+    pictureElement.querySelector('.picture__img').setAttribute('data-id', id);
+    similarListFragment.appendChild(pictureElement);
+  });
 
-pictures.appendChild(similarListFragment);
+  pictures.appendChild(similarListFragment);
+};
 
+//renderThumbnails();
+
+export{renderThumbnails};
 export{pictures};
-export{similarPictures};
+//export{similarPictures};
 
 
