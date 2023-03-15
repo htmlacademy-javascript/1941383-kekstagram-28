@@ -12,7 +12,7 @@ const similarListFragment = document.createDocumentFragment();
 
 similarPictures.forEach(({url, likes, comments, id}) => {
   const pictureElement = picture.cloneNode(true);
-//console.log(id);
+
   pictureElement.querySelector('.picture__img').src = url;
   pictureElement.querySelector('.picture__likes').textContent = likes;
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
