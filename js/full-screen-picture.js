@@ -5,9 +5,19 @@ import {isEscapeKey} from './util.js';
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = document.querySelector('.big-picture__img');
 const socialComments = document.querySelector('.social__comments');
-const socialCommentsCount = document.querySelector('.social__comment-count');
+//const socialCommentsCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const body = document.querySelector('body');
+
+const showComments = () => {
+  const commentsMassive = socialComments.querySelectorAll('.hidden');
+  for (let i = 0; i < commentsMassive.length; i++) {
+    if(i < 5) {
+      commentsMassive[i].classList.remove('hidden');
+    }
+  }
+  commentsLoader.removeEventListener('click');
+}; //функция для удаление 5 комментариев
 
 const renderComments = (comments) => {
   const similarCommentFragment = document.createDocumentFragment();
@@ -20,10 +30,11 @@ const renderComments = (comments) => {
     socialCommentCopy.querySelector('.social__picture').src = avatar;
     socialCommentCopy.querySelector('.social__picture').alt = name;
     socialCommentCopy.querySelector('.social__text').textContent = message;
-
+    socialCommentCopy.classList.add('hidden');
     similarCommentFragment.append(socialCommentCopy);
   });
   socialComments.append(similarCommentFragment);
+  showComments();
 };
 
 const onDocumentKeydown = (evt) => {
@@ -48,8 +59,11 @@ const openBigPicture = (evt) => {
   bigPicture.querySelector('.social__caption').textContent = pictureItem.description;
   bigPicture.querySelector('.comments-count').textContent = evt.target.closest('.picture').querySelector('.picture__comments').textContent;
 
-  socialCommentsCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
+  //socialCommentsCount.classList.add('hidden');
+  //commentsLoader.classList.add('hidden');
+
+  //коллекиця элементов hidden
+  //count счётчик количества выведенных комментариев
 
   body.classList.add('modal-open');
 
@@ -70,3 +84,4 @@ const closeBigPicture = (evt) => {
 
 bigPicture.addEventListener('click', closeBigPicture); //закрывает фотку
 
+commentsLoader.addEventListener('click', showComments);
