@@ -52,6 +52,9 @@ const onDocumentKeydown = (evt) => {
 };
 
 const openBigPicture = (evt) => {
+  if(!evt.target.closest('.picture')){
+    return;
+  }
   if (evt.target.closest('.picture')) {
     bigPicture.classList.remove('hidden');
   }
