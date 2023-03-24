@@ -9,16 +9,17 @@ const commentsLoader = document.querySelector('.comments-loader');
 const body = document.querySelector('body');
 const commentVisible = document.querySelector('.social__comment-visible');
 const commentsCount = document.querySelector('.social__comment-count');
+const COMMENTS_PER_STEP = 5;
 
 //функция для выведения на экран пяти комментариев
 const showComments = () => {
   const commentsMassive = socialComments.querySelectorAll('.hidden');
   for (let i = 0; i < commentsMassive.length; i++) {
-    if(i < 5) {
+    if(i < COMMENTS_PER_STEP) {
       commentsMassive[i].classList.remove('hidden');
     }
   }
-  if (commentsMassive.length < 5) {
+  if (commentsMassive.length <= COMMENTS_PER_STEP) {
     commentsLoader.classList.add('hidden');
   }
   commentVisible.textContent = commentsCount.querySelector('.comments-count').textContent - socialComments.querySelectorAll('.hidden').length;
@@ -51,6 +52,9 @@ const onDocumentKeydown = (evt) => {
 };
 
 const openBigPicture = (evt) => {
+  if(!evt.target.closest('.picture')){
+    return;
+  }
   if (evt.target.closest('.picture')) {
     bigPicture.classList.remove('hidden');
   }
@@ -86,3 +90,5 @@ const closeBigPicture = (evt) => {
 bigPicture.addEventListener('click', closeBigPicture); //закрывает фотку
 
 commentsLoader.addEventListener('click', showComments);
+
+export {body};
