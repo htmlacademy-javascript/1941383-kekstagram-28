@@ -154,24 +154,88 @@ noUiSlider.create(sliderElement, {
 const sliderValueElement = document.querySelector('.effect-level__value');
 //const effectsRadio = document.querySelector('.effects__radio');
 const effectsList = document.querySelector('.effects__list');
+const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
 sliderElement.noUiSlider.on('update', () => {
   sliderValueElement.value = sliderElement.noUiSlider.get();
-  console.log(sliderValueElement.value);
+  //console.log(sliderValueElement.value);
+});
+
+effectsList.addEventListener('change', (evt) => {
+  if(!evt.target.checked) {
+    return;
+  }
+  console.log(evt.target.value);
+  imagePreview.className = evt.target.value;
+  imgUploadEffectLevel.classList.add('hidden');
+  if(evt.target.value === 'effects__preview--none'){
+    imgUploadEffectLevel.classList.add('hidden');
+  } else
+  if(evt.target.value === 'effects__preview--chrome') {
+    imgUploadEffectLevel.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 1
+      },
+      start: 1,
+      step: 0.1
+    });
+    console.log(sliderValueElement.value);
+    imagePreview.style.filter = `grayscale(${sliderValueElement.value})`; //как здесь получить нормальный value
+  } else
+  if(evt.target.value === 'effects__preview--marvin'){
+    imgUploadEffectLevel.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 100
+      },
+      start: 1,
+      step: 1
+    });
+  } else
+  if(evt.target.value === 'effects__preview--sepia'){
+    imgUploadEffectLevel.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 100
+      },
+      start: 1,
+      step: 1
+    });
+  } else
+  if(evt.target.value === 'effects__preview--phobos'){
+    imgUploadEffectLevel.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 3
+      },
+      start: 1,
+      step: 0.1
+    });
+  } else
+  if(evt.target.value === 'effects__preview--heat'){
+    imgUploadEffectLevel.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 1,
+        max: 3
+      },
+      start: 1,
+      step: 0.1
+    });
+  }
 });
 
 
-effectsList.addEventListener('change', (evt) => {
-  if(evt.target.checked) {
-    console.log(evt.target.value);
-    imagePreview.classList.add(evt.target.value);
-  }
 
-
-  /*if(evt.target.checked) {
+/*if(evt.target.checked) {
 
     imagePreview.classList.add('effects__preview--chrome');
   } else {
     console.log('анчек');
   }*/
-});
+
