@@ -141,13 +141,14 @@ scaleControlBigger.addEventListener('click', () => {
 
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderValueElement = document.querySelector('.effect-level__value');
-//const effectsRadio = document.querySelector('.effects__radio');
 const effectsList = document.querySelector('.effects__list');
 const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
-/*sliderElement.noUiSlider.on('update', () => {
-  sliderValueElement.value = sliderElement.noUiSlider.get();
-});*/
+
+sliderValueElement.value = 80;
+
+
+console.log(sliderValueElement.value);
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -157,6 +158,11 @@ noUiSlider.create(sliderElement, {
   start: 80,
   step: 1,
   connect: 'lower',
+});
+
+sliderElement.noUiSlider.on('update', () => {
+  sliderValueElement.value = sliderElement.noUiSlider.get();
+  //imagePreview.style.filter = `grayscale(${sliderValueElement.value})`;
 });
 
 const updateSlider = (value) => {
@@ -174,7 +180,8 @@ const updateSlider = (value) => {
       start: 1,
       step: 0.1
     });
-    //imagePreview.style.filter = `grayscale(${sliderValueElement.value})`; //как здесь получить нормальный value
+
+    //imagePreview.style.filter = `grayscale(${stil})`; //как здесь получить нормальный value
   } else
   if(value === 'marvin'){
     imgUploadEffectLevel.classList.remove('hidden');
@@ -225,10 +232,12 @@ const updateSlider = (value) => {
 effectsList.addEventListener('change', (evt) => {
   const effect = evt.target.closest('input[type="radio"]').value;
   imagePreview.className = `effects__preview--${evt.target.value}`;
-  imagePreview.style.filter = `grayscale(${sliderValueElement.value})`;
   updateSlider(effect);
 });
 
+
+
+//вариант 1
 /*
 effectsList.addEventListener('change', (evt) => {
   if(!evt.target.checked) {
@@ -302,9 +311,3 @@ effectsList.addEventListener('change', (evt) => {
 
 */
 
-/*if(evt.target.checked) {
-
-    imagePreview.classList.add('effects__preview--chrome');
-  } else {
-    console.log('анчек');
-  }*/
