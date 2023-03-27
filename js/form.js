@@ -1,5 +1,7 @@
 import {body} from './full-screen-picture.js';
 import {isEscapeKey} from './util.js';
+import {resetEffects} from './filters.js';
+import {imagePreview} from './filters.js';
 
 const MAX_LENGTH_TAG = 5;
 const SCALE_VALUE = `${100}%`;
@@ -17,8 +19,7 @@ const textDescription = document.querySelector('.text__description');
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlValue = document.querySelector('.scale__control--value');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
-const imageUploadPreview = document.querySelector('.img-upload__preview');
-const imagePreview = imageUploadPreview.querySelector('img');
+
 
 //функция приведения значения поля в процентах к числу
 const getOnlyNumber = (value) => Number(value.replace(/\D/g,''));
@@ -31,6 +32,7 @@ const onCloseUploadKeydown = (evt) => {
     uploadFile.value = '';
     hashTags.value = '';
     scaleControlValue.value = '';
+    resetEffects();
   }
 };
 
@@ -38,6 +40,7 @@ const closeUploadPicture = (evt) => {
   if(evt.target.closest('.img-upload__cancel')) {
     imgUploadOverlay.classList.add('hidden');
     body.classList.remove('modal-open');
+    resetEffects();
   }
   uploadFile.value = '';
   document.removeEventListener('keydown', onCloseUploadKeydown);
@@ -137,177 +140,4 @@ scaleControlBigger.addEventListener('click', () => {
   imagePreview.style.transform = scaleValueToMax;
 });
 
-//работа со слайдером
-
-const sliderElement = document.querySelector('.effect-level__slider');
-const sliderValueElement = document.querySelector('.effect-level__value');
-const effectsList = document.querySelector('.effects__list');
-const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
-
-
-sliderValueElement.value = 80;
-
-
-console.log(sliderValueElement.value);
-
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 80,
-  step: 1,
-  connect: 'lower',
-});
-
-sliderElement.noUiSlider.on('update', () => {
-  sliderValueElement.value = sliderElement.noUiSlider.get();
-  //imagePreview.style.filter = `grayscale(${sliderValueElement.value})`;
-});
-
-const updateSlider = (value) => {
-
-  if(value === 'none'){
-    imgUploadEffectLevel.classList.add('hidden');
-  } else
-  if(value === 'chrome') {
-    imgUploadEffectLevel.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 1
-      },
-      start: 1,
-      step: 0.1
-    });
-
-    //imagePreview.style.filter = `grayscale(${stil})`; //как здесь получить нормальный value
-  } else
-  if(value === 'marvin'){
-    imgUploadEffectLevel.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100
-      },
-      start: 1,
-      step: 1
-    });
-  } else
-  if(value === 'sepia'){
-    imgUploadEffectLevel.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100
-      },
-      start: 1,
-      step: 1
-    });
-  } else
-  if(value === 'phobos'){
-    imgUploadEffectLevel.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 3
-      },
-      start: 1,
-      step: 0.1
-    });
-  } else
-  if(value === 'heat'){
-    imgUploadEffectLevel.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 1,
-        max: 3
-      },
-      start: 1,
-      step: 0.1
-    });
-  }
-};
-
-effectsList.addEventListener('change', (evt) => {
-  const effect = evt.target.closest('input[type="radio"]').value;
-  imagePreview.className = `effects__preview--${evt.target.value}`;
-  updateSlider(effect);
-});
-
-
-
-//вариант 1
-/*
-effectsList.addEventListener('change', (evt) => {
-  if(!evt.target.checked) {
-    return;
-  }
-  imagePreview.className = evt.target.value;
-  imgUploadEffectLevel.classList.add('hidden');
-  if(evt.target.value === 'effects__preview--none'){
-    imgUploadEffectLevel.classList.add('hidden');
-  } else
-  if(evt.target.value === 'effects__preview--chrome') {
-    imgUploadEffectLevel.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 1
-      },
-      start: 1,
-      step: 0.1
-    });
-    sliderElement.noUiSlider.on('update', () => {
-      sliderValueElement.value = sliderElement.noUiSlider.get();
-    });
-    imagePreview.style.filter = `grayscale(${sliderValueElement.value})`; //как здесь получить нормальный value
-  } else
-  if(evt.target.value === 'effects__preview--marvin'){
-    imgUploadEffectLevel.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100
-      },
-      start: 1,
-      step: 1
-    });
-  } else
-  if(evt.target.value === 'effects__preview--sepia'){
-    imgUploadEffectLevel.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100
-      },
-      start: 1,
-      step: 1
-    });
-  } else
-  if(evt.target.value === 'effects__preview--phobos'){
-    imgUploadEffectLevel.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 3
-      },
-      start: 1,
-      step: 0.1
-    });
-  } else
-  if(evt.target.value === 'effects__preview--heat'){
-    imgUploadEffectLevel.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 1,
-        max: 3
-      },
-      start: 1,
-      step: 0.1
-    });
-  }
-});
-
-*/
 
