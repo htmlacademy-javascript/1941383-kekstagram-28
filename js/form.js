@@ -140,6 +140,14 @@ scaleControlBigger.addEventListener('click', () => {
 //работа со слайдером
 
 const sliderElement = document.querySelector('.effect-level__slider');
+const sliderValueElement = document.querySelector('.effect-level__value');
+//const effectsRadio = document.querySelector('.effects__radio');
+const effectsList = document.querySelector('.effects__list');
+const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
+
+/*sliderElement.noUiSlider.on('update', () => {
+  sliderValueElement.value = sliderElement.noUiSlider.get();
+});*/
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -151,21 +159,81 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
-const sliderValueElement = document.querySelector('.effect-level__value');
-//const effectsRadio = document.querySelector('.effects__radio');
-const effectsList = document.querySelector('.effects__list');
-const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
+const updateSlider = (value) => {
 
-sliderElement.noUiSlider.on('update', () => {
-  sliderValueElement.value = sliderElement.noUiSlider.get();
-  //console.log(sliderValueElement.value);
+  if(value === 'none'){
+    imgUploadEffectLevel.classList.add('hidden');
+  } else
+  if(value === 'chrome') {
+    imgUploadEffectLevel.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 1
+      },
+      start: 1,
+      step: 0.1
+    });
+    //imagePreview.style.filter = `grayscale(${sliderValueElement.value})`; //как здесь получить нормальный value
+  } else
+  if(value === 'marvin'){
+    imgUploadEffectLevel.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 100
+      },
+      start: 1,
+      step: 1
+    });
+  } else
+  if(value === 'sepia'){
+    imgUploadEffectLevel.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 100
+      },
+      start: 1,
+      step: 1
+    });
+  } else
+  if(value === 'phobos'){
+    imgUploadEffectLevel.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 3
+      },
+      start: 1,
+      step: 0.1
+    });
+  } else
+  if(value === 'heat'){
+    imgUploadEffectLevel.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 1,
+        max: 3
+      },
+      start: 1,
+      step: 0.1
+    });
+  }
+};
+
+effectsList.addEventListener('change', (evt) => {
+  const effect = evt.target.closest('input[type="radio"]').value;
+  imagePreview.className = `effects__preview--${evt.target.value}`;
+  imagePreview.style.filter = `grayscale(${sliderValueElement.value})`;
+  updateSlider(effect);
 });
 
+/*
 effectsList.addEventListener('change', (evt) => {
   if(!evt.target.checked) {
     return;
   }
-  console.log(evt.target.value);
   imagePreview.className = evt.target.value;
   imgUploadEffectLevel.classList.add('hidden');
   if(evt.target.value === 'effects__preview--none'){
@@ -181,7 +249,9 @@ effectsList.addEventListener('change', (evt) => {
       start: 1,
       step: 0.1
     });
-    console.log(sliderValueElement.value);
+    sliderElement.noUiSlider.on('update', () => {
+      sliderValueElement.value = sliderElement.noUiSlider.get();
+    });
     imagePreview.style.filter = `grayscale(${sliderValueElement.value})`; //как здесь получить нормальный value
   } else
   if(evt.target.value === 'effects__preview--marvin'){
@@ -230,7 +300,7 @@ effectsList.addEventListener('change', (evt) => {
   }
 });
 
-
+*/
 
 /*if(evt.target.checked) {
 
@@ -238,4 +308,3 @@ effectsList.addEventListener('change', (evt) => {
   } else {
     console.log('анчек');
   }*/
-
