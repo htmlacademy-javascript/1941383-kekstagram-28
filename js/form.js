@@ -78,6 +78,6 @@ imgUploadForm.addEventListener('input', () => {
   }
 });
 
-pristine.addValidator(hashTags, validateHashTag);
+pristine.addValidator(hashTags, validateHashTag, 'Ошибка в написании хештега');
 
 export {SCALE_VALUE, scaleControlValue};
