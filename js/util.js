@@ -33,4 +33,7 @@ const createIdGenerator = () => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, createIdGeneratorRandom, createIdGenerator, isEscapeKey};
+//функция приведения значения поля в процентах к числу
+const getOnlyNumber = (value) => Number(value.replace(/\D/g,''));
+
+export {getRandomInteger, createIdGeneratorRandom, createIdGenerator, isEscapeKey,getOnlyNumber};
