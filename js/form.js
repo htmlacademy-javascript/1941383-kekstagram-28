@@ -17,7 +17,6 @@ const imgUploadForm = document.querySelector('.img-upload__form');
 const hashTags = imgUploadForm.querySelector('#hashtags');
 const textDescription = document.querySelector('.text__description');
 const submitButton = document.querySelector('.img-upload__submit');
-
 const scaleControlValue = document.querySelector('.scale__control--value');
 
 const SubmitButtonText = {
@@ -69,6 +68,38 @@ const onStopEsc = (inputName) => {
   });
 };
 
+const closeMessageOnSuccess = () => {
+  const sectionSuccess = document.querySelector('.success');
+  sectionSuccess.remove();
+};
+
+const closeMessageOnSuccessKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeMessageOnSuccess();
+  }
+};
+
+const closeMessageOnSuccessAnyClick = (evt) => {
+  if(evt.target.closest('.success__inner')) { /* empty */ } else
+
+  if(evt.target.closest('.success')) {
+    closeMessageOnSuccess();
+  }
+};
+
+const showMessageOnSuccess = () => {
+  const success = document.querySelector('#success')
+    .content
+    .querySelector('.success');
+  const successTemp = success.cloneNode(true);
+  const successButton = successTemp.querySelector('.success__button');
+  successButton.addEventListener('click', closeMessageOnSuccess);
+  successTemp.addEventListener('keydown', closeMessageOnSuccessKeydown);
+  successTemp.addEventListener('click', closeMessageOnSuccessAnyClick);
+  body.appendChild(successTemp);
+};
+
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'form__item--invalid',
@@ -76,6 +107,22 @@ const pristine = new Pristine(imgUploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__error-text',
 });
+
+const setFormSubmit = (onSuccess, message) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if(pristine.validate()) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .then(message)
+        .catch((err) => {
+          showAlert(err.message);
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
 
 imgUploadInput.addEventListener('change', () => {
   imgUploadOverlay.classList.remove('hidden');
@@ -90,21 +137,6 @@ onStopEsc(textDescription);
 
 imgUploadCancel.addEventListener('click', closeUploadPicture);
 
-const setFormSubmit = (onSuccess) => {
-  imgUploadForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    if(pristine.validate()) {
-      blockSubmitButton();
-      sendData(new FormData(evt.target))
-        .then(onSuccess)
-        .catch((err) => {
-          showAlert(err.message);
-        })
-        .finally(unblockSubmitButton);
-    }
-  });
-};
-
 pristine.addValidator(hashTags, validateHashTag, 'Ошибка в написании хештега');
 
-export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal};
+export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal, showMessageOnSuccess, closeMessageOnSuccess};

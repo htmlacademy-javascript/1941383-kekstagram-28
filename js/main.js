@@ -8,15 +8,17 @@ import {setFormSubmit} from './form.js';
 import {closeUserModal} from './form.js';
 import {getData} from './api.js';
 import {showAlert} from './util.js';
+import {showMessageOnSuccess} from './form.js';
 
-const similarPictures = createPictures();
-//renderThumbnails(similarPictures);
 
-setFormSubmit(closeUserModal);
+let similarPictures = createPictures();
+
+setFormSubmit(closeUserModal,showMessageOnSuccess);
 
 getData()
   .then((objects) => {
-    renderThumbnails(objects);
+    similarPictures = objects;
+    renderThumbnails(similarPictures);
   })
   .catch(
     (err) => {
