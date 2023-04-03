@@ -1,15 +1,13 @@
-import {createPictures} from './data.js';
-import {renderThumbnails} from './thumbnail-rendering.js';
+
 import './full-screen-picture.js';
 import './form.js';
 import './filters.js';
 import './scale.js';
-import {setFormSubmit} from './form.js';
-import {closeUserModal} from './form.js';
+import {createPictures} from './data.js';
+import {renderThumbnails} from './thumbnail-rendering.js';
 import {getData} from './api.js';
 import {showAlert} from './util.js';
-import {showMessageOnSuccess} from './form.js';
-
+import {setFormSubmit, closeUserModal, showMessageOnSuccess} from './form.js';
 
 let similarPictures = createPictures();
 

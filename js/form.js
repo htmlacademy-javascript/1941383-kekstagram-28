@@ -81,9 +81,7 @@ const closeMessageOnSuccessKeydown = (evt) => {
 };
 
 const closeMessageOnSuccessAnyClick = (evt) => {
-  if(evt.target.closest('.success__inner')) { /* empty */ } else
-
-  if(evt.target.closest('.success')) {
+  if(evt.target.closest('.success') && !evt.target.closest('.success__inner')) {
     closeMessageOnSuccess();
   }
 };
