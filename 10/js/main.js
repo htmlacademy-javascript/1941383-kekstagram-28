@@ -1,19 +1,16 @@
-import {createPictures} from './data.js';
-import {renderThumbnails} from './thumbnail-rendering.js';
+
 import './full-screen-picture.js';
 import './form.js';
 import './filters.js';
 import './scale.js';
-import {setFormSubmit} from './form.js';
-import {closeUserModal} from './form.js';
+import {renderThumbnails} from './thumbnail-rendering.js';
 import {getData} from './api.js';
 import {showAlert} from './util.js';
-import {showMessageOnSuccess} from './form.js';
+import {setFormSubmit, closeUserModal, showMessageOnSuccess, showErrorMessage} from './form.js';
 
+let similarPictures = '';
 
-let similarPictures = createPictures();
-
-setFormSubmit(closeUserModal,showMessageOnSuccess);
+setFormSubmit(closeUserModal,showMessageOnSuccess, showErrorMessage);
 
 getData()
   .then((objects) => {
@@ -28,6 +25,4 @@ getData()
 
 export{similarPictures};
 
-
-//  https://28.javascript.pages.academy/kekstagram
 
