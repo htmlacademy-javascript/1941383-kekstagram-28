@@ -9,7 +9,6 @@ const isUniqueHashTag = (value) => {
   return tagToLowercase.length === new Set(tagToLowercase).size;
 };
 
-
 //проверка длины массива тегов
 
 const isHashTagLength = (value) => {

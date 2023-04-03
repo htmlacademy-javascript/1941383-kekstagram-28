@@ -1,4 +1,3 @@
-//import {createPictures} from './data.js';
 
 const pictures = document.querySelector('.pictures'); //сюда вставляем
 
@@ -22,10 +21,4 @@ const renderThumbnails = (picturesArray) => {
   pictures.appendChild(similarListFragment);
 };
 
-//renderThumbnails();
-
-export{renderThumbnails};
-export{pictures};
-//export{similarPictures};
-
-
+export{renderThumbnails, pictures};
