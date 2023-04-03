@@ -4,7 +4,6 @@ import {resetEffects} from './filters.js';
 import {imagePreview} from './filters.js';
 import {validateHashTag} from './validation.js';
 import {getOnlyNumber} from './util.js';
-import {showAlert} from './util.js';
 import {sendData} from './api.js';
 
 const SCALE_VALUE = `${100}%`;
@@ -18,6 +17,7 @@ const hashTags = imgUploadForm.querySelector('#hashtags');
 const textDescription = document.querySelector('.text__description');
 const submitButton = document.querySelector('.img-upload__submit');
 const scaleControlValue = document.querySelector('.scale__control--value');
+const error = document.querySelector('#error').content.querySelector('.error');
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -42,6 +42,14 @@ const closeUserModal = () => {
   textDescription.value = '';
   scaleControlValue.value = '';
   resetEffects();
+};
+
+const hiddenUserModal = () => {
+  imgUploadOverlay.classList.add('hidden');
+};
+
+const showhiddenUserModal = () => {
+  imgUploadOverlay.classList.remove('hidden');
 };
 
 const onCloseUploadKeydown = (evt) => {
@@ -98,6 +106,35 @@ const showMessageOnSuccess = () => {
   body.appendChild(successTemp);
 };
 
+const closeErrorMessage = () => {
+  const sectionError = document.querySelector('.error');
+  sectionError.remove();
+  showhiddenUserModal();
+};
+
+const closeErrorMessageOnKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeErrorMessage();
+  }
+};
+
+const closeErrorMessageOnAnyClick = (evt) => {
+  if(evt.target.closest('.error') && !evt.target.closest('.error__inner')) {
+    closeErrorMessage();
+  }
+};
+
+const showErrorMessage = () => {
+  const errorTemp = error.cloneNode(true);
+  const errorButton = errorTemp.querySelector('.error__button');
+  errorButton.addEventListener('click', closeErrorMessage);
+  errorTemp.addEventListener('keydown', closeErrorMessageOnKeydown);
+  errorTemp.addEventListener('click', closeErrorMessageOnAnyClick);
+  hiddenUserModal();
+  document.body.appendChild(errorTemp);
+};
+
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'form__item--invalid',
@@ -106,17 +143,15 @@ const pristine = new Pristine(imgUploadForm, {
   errorTextClass: 'img-upload__error-text',
 });
 
-const setFormSubmit = (onSuccess, message) => {
+const setFormSubmit = (onSuccess, showMessage, showError) => {
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if(pristine.validate()) {
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(onSuccess)
-        .then(message)
-        .catch((err) => {
-          showAlert(err.message);
-        })
+        .then(showMessage)
+        .catch(showError)
         .finally(unblockSubmitButton);
     }
   });
@@ -137,4 +172,4 @@ imgUploadCancel.addEventListener('click', closeUploadPicture);
 
 pristine.addValidator(hashTags, validateHashTag, 'Ошибка в написании хештега');
 
-export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal, showMessageOnSuccess, closeMessageOnSuccess};
+export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal, showMessageOnSuccess, closeMessageOnSuccess, showErrorMessage};

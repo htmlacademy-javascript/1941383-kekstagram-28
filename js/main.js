@@ -3,15 +3,14 @@ import './full-screen-picture.js';
 import './form.js';
 import './filters.js';
 import './scale.js';
-import {createPictures} from './data.js';
 import {renderThumbnails} from './thumbnail-rendering.js';
 import {getData} from './api.js';
 import {showAlert} from './util.js';
-import {setFormSubmit, closeUserModal, showMessageOnSuccess} from './form.js';
+import {setFormSubmit, closeUserModal, showMessageOnSuccess, showErrorMessage} from './form.js';
 
-let similarPictures = createPictures();
+let similarPictures = '';
 
-setFormSubmit(closeUserModal,showMessageOnSuccess);
+setFormSubmit(closeUserModal,showMessageOnSuccess, showErrorMessage);
 
 getData()
   .then((objects) => {
@@ -26,6 +25,4 @@ getData()
 
 export{similarPictures};
 
-
-//  https://28.javascript.pages.academy/kekstagram
 

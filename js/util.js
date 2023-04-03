@@ -59,4 +59,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getRandomInteger, createIdGeneratorRandom, createIdGenerator, isEscapeKey,getOnlyNumber,showAlert};
+export {getRandomInteger, createIdGeneratorRandom, createIdGenerator, isEscapeKey, getOnlyNumber, showAlert};
