@@ -2,9 +2,7 @@
 const pictures = document.querySelector('.pictures'); //сюда вставляем
 
 const renderThumbnails = (picturesArray) => {
-  const picture = document.querySelector('#picture')
-    .content
-    .querySelector('.picture'); //шаблон который копируем
+  const picture = document.querySelector('#picture').content.querySelector('.picture'); //шаблон который копируем
 
   const similarListFragment = document.createDocumentFragment();
 
@@ -18,6 +16,8 @@ const renderThumbnails = (picturesArray) => {
     similarListFragment.appendChild(pictureElement);
   });
 
+  const pictureArray = pictures.querySelectorAll('.picture');
+  pictureArray.forEach((element) => element.remove());
   pictures.appendChild(similarListFragment);
 };
 

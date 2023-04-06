@@ -34,6 +34,10 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
+const hiddenUserModal = () => {
+  imgUploadOverlay.classList.add('hidden');
+};
+
 const closeUserModal = () => {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -42,10 +46,6 @@ const closeUserModal = () => {
   textDescription.value = '';
   scaleControlValue.value = '';
   resetEffects();
-};
-
-const hiddenUserModal = () => {
-  imgUploadOverlay.classList.add('hidden');
 };
 
 const showhiddenUserModal = () => {
@@ -95,13 +95,11 @@ const closeMessageOnSuccessAnyClick = (evt) => {
 };
 
 const showMessageOnSuccess = () => {
-  const success = document.querySelector('#success')
-    .content
-    .querySelector('.success');
+  const success = document.querySelector('#success').content.querySelector('.success');
   const successTemp = success.cloneNode(true);
   const successButton = successTemp.querySelector('.success__button');
   successButton.addEventListener('click', closeMessageOnSuccess);
-  successTemp.addEventListener('keydown', closeMessageOnSuccessKeydown);
+  document.addEventListener('keydown', closeMessageOnSuccessKeydown);
   successTemp.addEventListener('click', closeMessageOnSuccessAnyClick);
   body.appendChild(successTemp);
 };
@@ -115,6 +113,7 @@ const closeErrorMessage = () => {
 const closeErrorMessageOnKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
+    document.addEventListener('keydown', onCloseUploadKeydown);
     closeErrorMessage();
   }
 };
@@ -129,7 +128,8 @@ const showErrorMessage = () => {
   const errorTemp = error.cloneNode(true);
   const errorButton = errorTemp.querySelector('.error__button');
   errorButton.addEventListener('click', closeErrorMessage);
-  errorTemp.addEventListener('keydown', closeErrorMessageOnKeydown);
+  document.removeEventListener('keydown', onCloseUploadKeydown);
+  document.addEventListener('keydown', closeErrorMessageOnKeydown);
   errorTemp.addEventListener('click', closeErrorMessageOnAnyClick);
   hiddenUserModal();
   document.body.appendChild(errorTemp);
