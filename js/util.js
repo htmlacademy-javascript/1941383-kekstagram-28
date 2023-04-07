@@ -1,3 +1,5 @@
+const ALERT_SHOW_TIME = 5000;
+
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -36,8 +38,6 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 //функция приведения значения поля в процентах к числу
 const getOnlyNumber = (value) => Number(value.replace(/\D/g,''));
 
-const ALERT_SHOW_TIME = 5000;
-
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -59,4 +59,14 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getRandomInteger, createIdGeneratorRandom, createIdGenerator, isEscapeKey, getOnlyNumber, showAlert};
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomInteger, createIdGeneratorRandom, createIdGenerator, isEscapeKey, getOnlyNumber, showAlert, debounce};
