@@ -76,21 +76,21 @@ const onStopEsc = (inputName) => {
   });
 };
 
-const closeMessageOnSuccess = () => {
+const closeMessageSuccess = () => {
   const sectionSuccess = document.querySelector('.success');
   sectionSuccess.remove();
 };
 
-const closeMessageOnSuccessKeydown = (evt) => {
+const closeMessageSuccessKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeMessageOnSuccess();
+    closeMessageSuccess();
   }
 };
 
-const closeMessageOnSuccessAnyClick = (evt) => {
+const closeMessageSuccessAnyClick = (evt) => {
   if(evt.target.closest('.success') && !evt.target.closest('.success__inner')) {
-    closeMessageOnSuccess();
+    closeMessageSuccess();
   }
 };
 
@@ -98,9 +98,9 @@ const showMessageOnSuccess = () => {
   const success = document.querySelector('#success').content.querySelector('.success');
   const successTemp = success.cloneNode(true);
   const successButton = successTemp.querySelector('.success__button');
-  successButton.addEventListener('click', closeMessageOnSuccess);
-  document.addEventListener('keydown', closeMessageOnSuccessKeydown);
-  successTemp.addEventListener('click', closeMessageOnSuccessAnyClick);
+  successButton.addEventListener('click', closeMessageSuccess);
+  document.addEventListener('keydown', closeMessageSuccessKeydown);
+  successTemp.addEventListener('click', closeMessageSuccessAnyClick);
   body.appendChild(successTemp);
 };
 
@@ -172,4 +172,4 @@ imgUploadCancel.addEventListener('click', closeUploadPicture);
 
 pristine.addValidator(hashTags, validateHashTag, 'Ошибка в написании хештега');
 
-export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal, showMessageOnSuccess, closeMessageOnSuccess, showErrorMessage};
+export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal, showMessageOnSuccess, closeMessageSuccess, showErrorMessage};
