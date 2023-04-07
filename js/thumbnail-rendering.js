@@ -1,3 +1,6 @@
+import {debounce} from './util.js';
+const RERENDER_DELAY = 500;
+
 
 const pictures = document.querySelector('.pictures'); //сюда вставляем
 
@@ -21,4 +24,6 @@ const renderThumbnails = (picturesArray) => {
   pictures.appendChild(similarListFragment);
 };
 
-export{renderThumbnails, pictures};
+const debounceRenderGallery = (data) => debounce(() => renderThumbnails(data), RERENDER_DELAY)();
+
+export{renderThumbnails, pictures, debounceRenderGallery};
