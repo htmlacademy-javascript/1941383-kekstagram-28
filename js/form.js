@@ -5,7 +5,6 @@ import {imagePreview} from './filters.js';
 import {validateHashTag} from './validation.js';
 import {getOnlyNumber} from './util.js';
 import {sendData} from './api.js';
-//import {selectPhotoPreview} from './preview.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const SCALE_VALUE = `${100}%`;
