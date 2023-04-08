@@ -6,6 +6,7 @@ import {validateHashTag} from './validation.js';
 import {getOnlyNumber} from './util.js';
 import {sendData} from './api.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const SCALE_VALUE = `${100}%`;
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -158,6 +159,14 @@ const setFormSubmit = (onSuccess, showMessage, showError) => {
 };
 
 imgUploadInput.addEventListener('change', () => {
+
+  const file = uploadFile.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    imagePreview.src = URL.createObjectURL(file);
+  }
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onCloseUploadKeydown);
@@ -172,4 +181,4 @@ imgUploadCancel.addEventListener('click', closeUploadPicture);
 
 pristine.addValidator(hashTags, validateHashTag, 'Ошибка в написании хештега');
 
-export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal, showMessageOnSuccess, closeMessageSuccess, showErrorMessage};
+export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal, showMessageOnSuccess, closeMessageSuccess, showErrorMessage, uploadFile};
