@@ -10,24 +10,24 @@ import {showAlert} from './util.js';
 import {imgFilters, getRandomPhoto,randomPictures, getDefaultPhoto, getDiscussedPhoto, sortDescending} from './filter-compilation.js';
 import {setFormSubmit, closeUserModal, showMessageOnSuccess, showErrorMessage} from './form.js';
 
-let similarPictures = '';
 const sortKey = 'comments';
 
-setFormSubmit(closeUserModal,showMessageOnSuccess, showErrorMessage);
-
-getData()
-  .then((objects) => {
-    similarPictures = objects;
-    imgFilters.classList.remove('img-filters--inactive');
-    renderThumbnails(similarPictures);
-    getDefaultPhoto(() => debounceRenderGallery(similarPictures.slice()));
-    getRandomPhoto(() => debounceRenderGallery(randomPictures(similarPictures.slice())));
-    getDiscussedPhoto(() => debounceRenderGallery(sortDescending(similarPictures.slice(), sortKey)));
-  })
+const similarPictures = await getData()
   .catch(
     (err) => {
       showAlert(err.message);
     }
   );
+
+const render = () => {
+  imgFilters.classList.remove('img-filters--inactive');
+  renderThumbnails(similarPictures);
+  getDefaultPhoto(() => debounceRenderGallery(similarPictures.slice()));
+  getRandomPhoto(() => debounceRenderGallery(randomPictures(similarPictures.slice())));
+  getDiscussedPhoto(() => debounceRenderGallery(sortDescending(similarPictures.slice(), sortKey)));
+};
+
+setFormSubmit(closeUserModal,showMessageOnSuccess, showErrorMessage);
+render();
 
 export{similarPictures};

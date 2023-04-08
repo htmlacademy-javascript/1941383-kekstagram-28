@@ -1,4 +1,3 @@
-
 const imagePreview = document.querySelector('.img-upload__preview img');
 
 const EFFECTS = [
