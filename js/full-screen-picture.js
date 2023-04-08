@@ -48,6 +48,7 @@ const onDocumentKeydown = (evt) => {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
+    commentsLoader.classList.remove('hidden');
   }
 };
 
@@ -82,9 +83,8 @@ const closeBigPicture = (evt) => {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
     commentsLoader.classList.remove('hidden');
+    document.removeEventListener('keydown', onDocumentKeydown);
   }
-  document.removeEventListener('keydown', onDocumentKeydown);
-
 };
 
 bigPicture.addEventListener('click', closeBigPicture); //закрывает фотку
