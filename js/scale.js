@@ -32,4 +32,3 @@ scaleControlBigger.addEventListener('click', () => {
   imagePreview.style.transform = scaleValueToMax;
 });
 
-export {SCALE_VALUE};

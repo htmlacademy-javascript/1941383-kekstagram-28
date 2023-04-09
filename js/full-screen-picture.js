@@ -85,24 +85,18 @@ const closeBigPicture = (evt) => {
   }
 };
 
-const onBigPictureClick = (evt) => {
-  closeBigPicture(evt);
-};
 const picturesContainerClick = (evt) => {
   openBigPicture(evt);
+};
+
+const onBigPictureClick = (evt) => {
+  closeBigPicture(evt);
 };
 
 const onCommentsLoaderClick = () => {
   showComments();
 };
 
-/*const setListenersOnBigPicture = () => {
-picturesContainer.addEventListener('click', picturesContainerClick); //открывает фотку
-bigPicture.addEventListener('click', onBigPictureClick); //закрывает фотку
-commentsLoader.addEventListener('click', onCommentsLoaderClick);
-};*/
-
-//export {setListenersOnBigPicture};
 const setListenersOnBigPicture = () => {
   picturesContainer.addEventListener('click', picturesContainerClick);
   bigPicture.addEventListener('click', onBigPictureClick);

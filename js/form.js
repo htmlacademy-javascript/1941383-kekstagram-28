@@ -1,8 +1,6 @@
-import {isEscapeKey} from './util.js';
-import {resetEffects} from './filters.js';
-import {imagePreview} from './filters.js';
+import {isEscapeKey, getOnlyNumber} from './util.js';
+import {resetEffects, imagePreview} from './filters.js';
 import {validateHashTag} from './validation.js';
-import {getOnlyNumber} from './util.js';
 import {sendData} from './api.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -175,9 +173,7 @@ imgUploadInput.addEventListener('change', () => {
 
 onStopEsc(hashTags);
 onStopEsc(textDescription);
-
 imgUploadCancel.addEventListener('click', closeUploadPicture);
-
 pristine.addValidator(hashTags, validateHashTag, 'Ошибка в написании хештега');
 
 export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal, showMessageOnSuccess, closeMessageSuccess, showErrorMessage, uploadFile};

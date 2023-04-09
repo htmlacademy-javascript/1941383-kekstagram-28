@@ -1,5 +1,8 @@
 import {debounce} from './util.js';
+import {imgFilters, getDefaultPhoto, getRandomPhoto, getDiscussedPhoto, randomPictures, sortDescending} from './filter-compilation.js';
+
 const RERENDER_DELAY = 500;
+const sortKey = 'comments';
 
 const pictures = document.querySelector('.pictures'); //сюда вставляем
 
@@ -25,4 +28,12 @@ const renderThumbnails = (picturesArray) => {
 
 const debounceRenderGallery = (data) => debounce(() => renderThumbnails(data), RERENDER_DELAY)();
 
-export{renderThumbnails, pictures, debounceRenderGallery};
+const render = (data) => {
+  imgFilters.classList.remove('img-filters--inactive');
+  renderThumbnails(data);
+  getDefaultPhoto(() => debounceRenderGallery(data.slice()));
+  getRandomPhoto(() => debounceRenderGallery(randomPictures(data.slice())));
+  getDiscussedPhoto(() => debounceRenderGallery(sortDescending(data.slice(), sortKey)));
+};
+
+export{renderThumbnails, pictures, debounceRenderGallery, render};
