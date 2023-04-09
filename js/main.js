@@ -1,9 +1,8 @@
 
-import './full-screen-picture.js';
+import {setListenersOnBigPicture} from './full-screen-picture.js';
 import './form.js';
 import './filters.js';
 import './scale.js';
-import './filter-compilation.js';
 import {renderThumbnails, debounceRenderGallery} from './thumbnail-rendering.js';
 import {getData} from './api.js';
 import {showAlert} from './util.js';
@@ -26,7 +25,7 @@ const render = () => {
   getRandomPhoto(() => debounceRenderGallery(randomPictures(similarPictures.slice())));
   getDiscussedPhoto(() => debounceRenderGallery(sortDescending(similarPictures.slice(), sortKey)));
 };
-
+setListenersOnBigPicture();
 setFormSubmit(closeUserModal,showMessageOnSuccess, showErrorMessage);
 render();
 
