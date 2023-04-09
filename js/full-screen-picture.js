@@ -1,15 +1,15 @@
-import {pictures} from './thumbnail-rendering.js';
 import {similarPictures} from './main.js';
 import {isEscapeKey} from './util.js';
 
+const COMMENTS_PER_STEP = 5;
+
+const picturesContainer = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = document.querySelector('.big-picture__img');
 const socialComments = document.querySelector('.social__comments');
 const commentsLoader = document.querySelector('.comments-loader');
-//const body = document.querySelector('body');
 const commentVisible = document.querySelector('.social__comment-visible');
 const commentsCount = document.querySelector('.social__comment-count');
-const COMMENTS_PER_STEP = 5;
 
 //функция для выведения на экран пяти комментариев
 const showComments = () => {
@@ -76,8 +76,6 @@ const openBigPicture = (evt) => {
   renderComments(commentItems); //добавляет комменты в разметку
 };
 
-pictures.addEventListener('click', openBigPicture); //открывает фотку
-
 const closeBigPicture = (evt) => {
   if(evt.target.closest('.big-picture__cancel')) {
     bigPicture.classList.add('hidden');
@@ -87,8 +85,21 @@ const closeBigPicture = (evt) => {
   }
 };
 
-bigPicture.addEventListener('click', closeBigPicture); //закрывает фотку
+const onBigPictureClick = (evt) => {
+  closeBigPicture(evt);
+};
+const picturesContainerClick = (evt) => {
+  openBigPicture(evt);
+};
 
-commentsLoader.addEventListener('click', showComments);
+const onCommentsLoaderClick = () => {
+  showComments();
+};
 
-//export {body};
+const setListenersOnBigPicture = () => {
+  picturesContainer.addEventListener('click', picturesContainerClick); //открывает фотку
+  bigPicture.addEventListener('click', onBigPictureClick); //закрывает фотку
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
+};
+
+export {setListenersOnBigPicture};
