@@ -1,4 +1,3 @@
-import {body} from './full-screen-picture.js';
 import {isEscapeKey} from './util.js';
 import {resetEffects} from './filters.js';
 import {imagePreview} from './filters.js';
@@ -41,7 +40,7 @@ const hiddenUserModal = () => {
 
 const closeUserModal = () => {
   imgUploadOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
   uploadFile.value = '';
   hashTags.value = '';
   textDescription.value = '';
@@ -102,7 +101,7 @@ const showMessageOnSuccess = () => {
   successButton.addEventListener('click', closeMessageSuccess);
   document.addEventListener('keydown', closeMessageSuccessKeydown);
   successTemp.addEventListener('click', closeMessageSuccessAnyClick);
-  body.appendChild(successTemp);
+  document.body.appendChild(successTemp);
 };
 
 const closeErrorMessage = () => {
@@ -168,7 +167,7 @@ imgUploadInput.addEventListener('change', () => {
     imagePreview.src = URL.createObjectURL(file);
   }
   imgUploadOverlay.classList.remove('hidden');
-  body.classList.add('modal-open');
+  document.body.classList.add('modal-open');
   document.addEventListener('keydown', onCloseUploadKeydown);
   scaleControlValue.value = SCALE_VALUE;
   imagePreview.style.transform = `scale(${getOnlyNumber(scaleControlValue.value) / 100})`;

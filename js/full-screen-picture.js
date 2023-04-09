@@ -6,7 +6,7 @@ const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = document.querySelector('.big-picture__img');
 const socialComments = document.querySelector('.social__comments');
 const commentsLoader = document.querySelector('.comments-loader');
-const body = document.querySelector('body');
+//const body = document.querySelector('body');
 const commentVisible = document.querySelector('.social__comment-visible');
 const commentsCount = document.querySelector('.social__comment-count');
 const COMMENTS_PER_STEP = 5;
@@ -47,7 +47,7 @@ const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
     commentsLoader.classList.remove('hidden');
   }
 };
@@ -69,7 +69,7 @@ const openBigPicture = (evt) => {
   bigPicture.querySelector('.social__caption').textContent = pictureItem.description;
   bigPicture.querySelector('.comments-count').textContent = evt.target.closest('.picture').querySelector('.picture__comments').textContent;
 
-  body.classList.add('modal-open');
+  document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
 
@@ -81,7 +81,7 @@ pictures.addEventListener('click', openBigPicture); //открывает фот�
 const closeBigPicture = (evt) => {
   if(evt.target.closest('.big-picture__cancel')) {
     bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
     commentsLoader.classList.remove('hidden');
     document.removeEventListener('keydown', onDocumentKeydown);
   }
@@ -91,4 +91,4 @@ bigPicture.addEventListener('click', closeBigPicture); //закрывает фо
 
 commentsLoader.addEventListener('click', showComments);
 
-export {body};
+//export {body};
