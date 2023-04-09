@@ -1,4 +1,3 @@
-import {similarPictures} from './main.js';
 import {isEscapeKey} from './util.js';
 
 const COMMENTS_PER_STEP = 5;
@@ -52,7 +51,7 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const openBigPicture = (evt) => {
+const openBigPicture = (evt, pictures) => {
   if(!evt.target.closest('.picture')){
     return;
   }
@@ -60,7 +59,7 @@ const openBigPicture = (evt) => {
     bigPicture.classList.remove('hidden');
   }
   const pictureId = Number(evt.target.closest('.picture').querySelector('.picture__img').dataset.id);
-  const pictureItem = similarPictures.find((item) => item.id === pictureId);
+  const pictureItem = pictures.find((item) => item.id === pictureId);
   const commentItems = pictureItem.comments;
 
   bigPictureImg.querySelector('img').src = evt.target.closest('.picture').querySelector('.picture__img').src;
@@ -85,8 +84,8 @@ const closeBigPicture = (evt) => {
   }
 };
 
-const picturesContainerClick = (evt) => {
-  openBigPicture(evt);
+const picturesContainerClick = (evt, pictures) => {
+  openBigPicture(evt, pictures);
 };
 
 const onBigPictureClick = (evt) => {
@@ -97,8 +96,8 @@ const onCommentsLoaderClick = () => {
   showComments();
 };
 
-const setListenersOnBigPicture = () => {
-  picturesContainer.addEventListener('click', picturesContainerClick);
+const setListenersOnBigPicture = (pictures) => {
+  picturesContainer.addEventListener('click', (evt) => picturesContainerClick(evt, pictures));
   bigPicture.addEventListener('click', onBigPictureClick);
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
