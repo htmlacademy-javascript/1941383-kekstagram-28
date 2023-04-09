@@ -175,6 +175,9 @@ imgUploadInput.addEventListener('change', () => {
 onStopEsc(hashTags);
 onStopEsc(textDescription);
 imgUploadCancel.addEventListener('click', closeUploadPicture);
-pristine.addValidator(hashTags, validateHashTag, 'Ошибка в написании хештега');
 
-export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal, showMessageOnSuccess, closeMessageSuccess, showErrorMessage, uploadFile};
+const setFormValidator = () => {
+  pristine.addValidator(hashTags, validateHashTag, 'Ошибка в написании хештега');
+};
+
+export {SCALE_VALUE, scaleControlValue,setFormSubmit,closeUserModal, showMessageOnSuccess, closeMessageSuccess, showErrorMessage, uploadFile, setFormValidator};

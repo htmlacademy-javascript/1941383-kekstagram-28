@@ -12,6 +12,8 @@ const scaleControlBigger = document.querySelector('.scale__control--bigger');
 
 scaleControlValue.value = SCALE_VALUE;
 
+
+const setListenersOnScaleButtons = () => {
 //обработчик уменьшения фото
 scaleControlSmaller.addEventListener('click', () => {
   if(getOnlyNumber(scaleControlValue.value) <= MIN_SCALE_VALUE) {
@@ -31,4 +33,8 @@ scaleControlBigger.addEventListener('click', () => {
   const scaleValueToMax = `scale(${getOnlyNumber(scaleControlValue.value) / 100})`;
   imagePreview.style.transform = scaleValueToMax;
 });
+
+};
+
+export {setListenersOnScaleButtons};
 
