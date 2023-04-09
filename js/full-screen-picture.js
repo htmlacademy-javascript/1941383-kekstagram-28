@@ -13,10 +13,9 @@ const commentsCount = document.querySelector('.social__comment-count');
 //функция для выведения на экран пяти комментариев
 const showComments = () => {
   const commentsMassive = socialComments.querySelectorAll('.hidden');
-  for (let i = 0; i < commentsMassive.length; i++) {
-    if(i < COMMENTS_PER_STEP) {
-      commentsMassive[i].classList.remove('hidden');
-    }
+  const nextCommentsCount = commentsMassive.length < COMMENTS_PER_STEP ? commentsMassive.length : COMMENTS_PER_STEP;
+  for (let i = 0; i < nextCommentsCount; i++) {
+    commentsMassive[i].classList.remove('hidden');
   }
   if (commentsMassive.length <= COMMENTS_PER_STEP) {
     commentsLoader.classList.add('hidden');

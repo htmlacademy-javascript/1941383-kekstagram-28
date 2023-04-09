@@ -46,7 +46,7 @@ const closeUserModal = () => {
   resetEffects();
 };
 
-const showhiddenUserModal = () => {
+const showHiddenUserModal = () => {
   imgUploadOverlay.classList.remove('hidden');
 };
 
@@ -83,6 +83,7 @@ const closeMessageSuccessKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeMessageSuccess();
+    document.removeEventListener('keydown', closeMessageSuccessKeydown);
   }
 };
 
@@ -105,7 +106,7 @@ const showMessageOnSuccess = () => {
 const closeErrorMessage = () => {
   const sectionError = document.querySelector('.error');
   sectionError.remove();
-  showhiddenUserModal();
+  showHiddenUserModal();
 };
 
 const closeErrorMessageOnKeydown = (evt) => {
