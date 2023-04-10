@@ -5,9 +5,8 @@ const filterRandom = imgFilters.querySelector('#filter-random');
 const filterDefault = imgFilters.querySelector('#filter-default');
 const filterDiscussed = imgFilters.querySelector('#filter-discussed');
 
-const randomPictures = (data) => data.sort(() => Math.random() - 0.5).slice(0, PHOTO_COUNT);
-
-const sortDescending = (data, key) => data.sort((user1, user2) => user2[key] > user1[key] ? 1 : -1);
+const sortByComments = (data) => data.sort((a, b) => b.comments.length - a.comments.length);
+const shufflePictures = (data) => data.sort(() => Math.random() - 0.5);
 
 const chooseFilter = (filterType) => {
   filterDefault.classList.remove('img-filters__button--active');
@@ -16,25 +15,21 @@ const chooseFilter = (filterType) => {
   filterType.classList.add('img-filters__button--active');
 };
 
-const getRandomPhoto = (cb) => {
+const setListenersOnFilters = (pictures, renderPictures) => {
   filterRandom.addEventListener('click', (evt) => {
     chooseFilter(evt.target);
-    cb();
+    renderPictures(shufflePictures(pictures.slice()).slice(0, PHOTO_COUNT));
   });
-};
 
-const getDefaultPhoto = (cb) => {
   filterDefault.addEventListener('click', (evt) => {
     chooseFilter(evt.target);
-    cb();
+    renderPictures(pictures);
   });
-};
 
-const getDiscussedPhoto = (cb) => {
   filterDiscussed.addEventListener('click', (evt) => {
     chooseFilter(evt.target);
-    cb();
+    renderPictures(sortByComments(pictures.slice()));
   });
 };
 
-export {imgFilters,getRandomPhoto, randomPictures, getDefaultPhoto, sortDescending, getDiscussedPhoto};
+export {imgFilters, setListenersOnFilters};
