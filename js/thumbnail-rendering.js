@@ -2,7 +2,7 @@ import {debounce} from './util.js';
 import {imgFilters, getDefaultPhoto, getRandomPhoto, getDiscussedPhoto, randomPictures, sortDescending} from './filter-compilation.js';
 
 const RERENDER_DELAY = 500;
-const sortKey = 'comments';
+const SORT_KEY = 'comments';
 
 const pictures = document.querySelector('.pictures'); //сюда вставляем
 
@@ -33,7 +33,7 @@ const render = (data) => {
   renderThumbnails(data);
   getDefaultPhoto(() => debounceRenderGallery(data.slice()));
   getRandomPhoto(() => debounceRenderGallery(randomPictures(data.slice())));
-  getDiscussedPhoto(() => debounceRenderGallery(sortDescending(data.slice(), sortKey)));
+  getDiscussedPhoto(() => debounceRenderGallery(sortDescending(data.slice(), SORT_KEY)));
 };
 
 export{renderThumbnails, pictures, debounceRenderGallery, render};
