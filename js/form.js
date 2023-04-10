@@ -106,7 +106,6 @@ const showMessageOnSuccess = () => {
 const closeErrorMessageOnKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    // document.addEventListener('keydown', onCloseUploadKeydown);
     closeErrorMessage();
   }
 };
