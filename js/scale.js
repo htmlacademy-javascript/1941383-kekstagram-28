@@ -12,24 +12,29 @@ const scaleControlBigger = document.querySelector('.scale__control--bigger');
 
 scaleControlValue.value = SCALE_VALUE;
 
+
+const setListenersOnScaleButtons = () => {
 //обработчик уменьшения фото
-scaleControlSmaller.addEventListener('click', () => {
-  if(getOnlyNumber(scaleControlValue.value) <= MIN_SCALE_VALUE) {
-    return;
-  }
-  scaleControlValue.value = `${getOnlyNumber(scaleControlValue.value) - STEP_CHANGE_VALUE}%`;
-  const scaleValueToMin = `scale(${getOnlyNumber(scaleControlValue.value) / 100})`;
-  imagePreview.style.transform = scaleValueToMin;
-});
+  scaleControlSmaller.addEventListener('click', () => {
+    if(getOnlyNumber(scaleControlValue.value) <= MIN_SCALE_VALUE) {
+      return;
+    }
+    scaleControlValue.value = `${getOnlyNumber(scaleControlValue.value) - STEP_CHANGE_VALUE}%`;
+    const scaleValueToMin = `scale(${getOnlyNumber(scaleControlValue.value) / 100})`;
+    imagePreview.style.transform = scaleValueToMin;
+  });
 
-//обработчик увеличения фото
-scaleControlBigger.addEventListener('click', () => {
-  if(getOnlyNumber(scaleControlValue.value) >= MAX_SCALE_VALUE) {
-    return;
-  }
-  scaleControlValue.value = `${getOnlyNumber(scaleControlValue.value) + STEP_CHANGE_VALUE }%`;
-  const scaleValueToMax = `scale(${getOnlyNumber(scaleControlValue.value) / 100})`;
-  imagePreview.style.transform = scaleValueToMax;
-});
+  //обработчик увеличения фото
+  scaleControlBigger.addEventListener('click', () => {
+    if(getOnlyNumber(scaleControlValue.value) >= MAX_SCALE_VALUE) {
+      return;
+    }
+    scaleControlValue.value = `${getOnlyNumber(scaleControlValue.value) + STEP_CHANGE_VALUE }%`;
+    const scaleValueToMax = `scale(${getOnlyNumber(scaleControlValue.value) / 100})`;
+    imagePreview.style.transform = scaleValueToMax;
+  });
 
-export {SCALE_VALUE};
+};
+
+export {setListenersOnScaleButtons};
+

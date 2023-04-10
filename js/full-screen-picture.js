@@ -1,23 +1,21 @@
-import {pictures} from './thumbnail-rendering.js';
-import {similarPictures} from './main.js';
 import {isEscapeKey} from './util.js';
 
+const COMMENTS_PER_STEP = 5;
+
+const picturesContainer = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = document.querySelector('.big-picture__img');
 const socialComments = document.querySelector('.social__comments');
 const commentsLoader = document.querySelector('.comments-loader');
-const body = document.querySelector('body');
 const commentVisible = document.querySelector('.social__comment-visible');
 const commentsCount = document.querySelector('.social__comment-count');
-const COMMENTS_PER_STEP = 5;
 
 //функция для выведения на экран пяти комментариев
 const showComments = () => {
   const commentsMassive = socialComments.querySelectorAll('.hidden');
-  for (let i = 0; i < commentsMassive.length; i++) {
-    if(i < COMMENTS_PER_STEP) {
-      commentsMassive[i].classList.remove('hidden');
-    }
+  const nextCommentsCount = commentsMassive.length < COMMENTS_PER_STEP ? commentsMassive.length : COMMENTS_PER_STEP;
+  for (let i = 0; i < nextCommentsCount; i++) {
+    commentsMassive[i].classList.remove('hidden');
   }
   if (commentsMassive.length <= COMMENTS_PER_STEP) {
     commentsLoader.classList.add('hidden');
@@ -47,12 +45,12 @@ const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
     commentsLoader.classList.remove('hidden');
   }
 };
 
-const openBigPicture = (evt) => {
+const openBigPicture = (evt, pictures) => {
   if(!evt.target.closest('.picture')){
     return;
   }
@@ -60,7 +58,7 @@ const openBigPicture = (evt) => {
     bigPicture.classList.remove('hidden');
   }
   const pictureId = Number(evt.target.closest('.picture').querySelector('.picture__img').dataset.id);
-  const pictureItem = similarPictures.find((item) => item.id === pictureId);
+  const pictureItem = pictures.find((item) => item.id === pictureId);
   const commentItems = pictureItem.comments;
 
   bigPictureImg.querySelector('img').src = evt.target.closest('.picture').querySelector('.picture__img').src;
@@ -69,26 +67,37 @@ const openBigPicture = (evt) => {
   bigPicture.querySelector('.social__caption').textContent = pictureItem.description;
   bigPicture.querySelector('.comments-count').textContent = evt.target.closest('.picture').querySelector('.picture__comments').textContent;
 
-  body.classList.add('modal-open');
+  document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
 
   renderComments(commentItems); //добавляет комменты в разметку
 };
 
-pictures.addEventListener('click', openBigPicture); //открывает фотку
-
 const closeBigPicture = (evt) => {
   if(evt.target.closest('.big-picture__cancel')) {
     bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
     commentsLoader.classList.remove('hidden');
     document.removeEventListener('keydown', onDocumentKeydown);
   }
 };
 
-bigPicture.addEventListener('click', closeBigPicture); //закрывает фотку
+const picturesContainerClick = (evt, pictures) => {
+  openBigPicture(evt, pictures);
+};
 
-commentsLoader.addEventListener('click', showComments);
+const onBigPictureClick = (evt) => {
+  closeBigPicture(evt);
+};
 
-export {body};
+const onCommentsLoaderClick = () => {
+  showComments();
+};
+
+const setListenersOnBigPicture = (pictures) => {
+  picturesContainer.addEventListener('click', (evt) => picturesContainerClick(evt, pictures));
+  bigPicture.addEventListener('click', onBigPictureClick);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
+};
+export {setListenersOnBigPicture};
