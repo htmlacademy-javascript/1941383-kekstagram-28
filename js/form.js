@@ -77,15 +77,15 @@ const onStopEsc = (inputName) => {
 const closeMessageSuccess = () => {
   const sectionSuccess = document.querySelector('.success');
   sectionSuccess.remove();
+  document.removeEventListener('keydown', closeMessageSuccessKeydown);
 };
 
-const closeMessageSuccessKeydown = (evt) => {
+function closeMessageSuccessKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeMessageSuccess();
-    document.removeEventListener('keydown', closeMessageSuccessKeydown);
   }
-};
+}
 
 const closeMessageSuccessAnyClick = (evt) => {
   if(evt.target.closest('.success') && !evt.target.closest('.success__inner')) {
@@ -103,12 +103,6 @@ const showMessageOnSuccess = () => {
   document.body.appendChild(successTemp);
 };
 
-const closeErrorMessage = () => {
-  const sectionError = document.querySelector('.error');
-  sectionError.remove();
-  showHiddenUserModal();
-};
-
 const closeErrorMessageOnKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -116,6 +110,13 @@ const closeErrorMessageOnKeydown = (evt) => {
     closeErrorMessage();
   }
 };
+
+function closeErrorMessage () {
+  const sectionError = document.querySelector('.error');
+  sectionError.remove();
+  document.removeEventListener('keydown', closeErrorMessageOnKeydown);
+  showHiddenUserModal();
+}
 
 const closeErrorMessageOnAnyClick = (evt) => {
   if(evt.target.closest('.error') && !evt.target.closest('.error__inner')) {
